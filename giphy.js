@@ -40,23 +40,26 @@ function memoizeSearch() {
 const search = memoizeSearch();
 
 function findGifById(id) {
-    const apiKey = "hBZX9D1GD3KQfZ5jwDWAyEYsqnQIIEIJ";
-    const endPoint = "https://api.giphy.com/v1/gifs/";
+    return new Promise(((resolveFunc, rejectFunc) => {
+        const apiKey = "hBZX9D1GD3KQfZ5jwDWAyEYsqnQIIEIJ";
+        const endPoint = "https://api.giphy.com/v1/gifs/";
 
-    const queryString = `${endPoint}${id}?api_key=${apiKey}`;
+        const queryString = `${endPoint}${id}?api_key=${apiKey}`;
 
-    const xhr = new XMLHttpRequest();
-    
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            return(JSON.parse(xhr.response));
-        } else {
-            throw new Error(`Error... responce info:${xhr.status} ${xhr.statusText}`);
-        }
-    };
+        const xhr = new XMLHttpRequest();
+        
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                resolveFunc(xhr.response);
+            } else {
+                const error = new Error(`Error... responce info:${xhr.status} ${xhr.statusText}`);
+                rejectFunc(error);
+            }
+        };
 
-    xhr.open('GET', queryString, true);
-    xhr.send()
+        xhr.open('GET', queryString, true);
+        xhr.send()
+    }));   
 }
 
 function enableSubmitButton(event) {
