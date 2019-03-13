@@ -8,6 +8,21 @@
  </head>
  <body>    
   <script>
+    function insertGifOnPage(gif){
+        document.getElementById("searchContainer").style.display = "none";
+
+        document.getElementById("gifInfoImg").setAttribute("src", gif.images.original.url);        
+        document.getElementById("gifInfoDescription").innerText = `Gif info: ${gif.title} ${gif.import_datetime}`;
+
+        if (gif.user) {
+            document.getElementById("authorInfoImg").setAttribute("src", gif.user.avatar_url);
+            document.getElementById("authorInfoDescription").innerText = `Author info: ${gif.user.display_name}`;
+            document.getElementById("authorInfo").style.display = "";
+        }
+
+        document.getElementById("singleGif").style.display = "";
+    }
+
       window.onpopstate = function(event) {
         if (event.state == null) {
             returnToInitialSearchState();
@@ -40,26 +55,15 @@
 
         if (currentState.gifByIdState) {
             const gifState = currentState.gifByIdState;
-            const gif = findGifById(gifState.gifId);
-
-            document.getElementById("searchContainer").style.display = "none";
-
-            document.getElementById("gifInfoImg").setAttribute("src", gif.images.original.url);        
-            document.getElementById("gifInfoDescription").innerText = `Gif info: ${gif.title} ${gif.import_datetime}`;
-
-            if (gif.user) {
-                document.getElementById("authorInfoImg").setAttribute("src", gif.user.avatar_url);
-                document.getElementById("authorInfoDescription").innerText = `Author info: ${gif.user.display_name}`;
-                document.getElementById("authorInfo").style.display = "";
-            }
-
-            document.getElementById("singleGif").style.display = "";
+            const gif = findGifById(gifState.gifId).then(response => {
+                insertGifOnPage(JSON.parse(response).data);
+                }, error => console.log(error));            
         }
                
       };      
 
       window.onload = function(event) { 
-          
+
       }
   </script>  
   <div id="searchContainer">
