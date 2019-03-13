@@ -39,6 +39,26 @@ function memoizeSearch() {
 
 const search = memoizeSearch();
 
+function findGifById(id) {
+    const apiKey = "hBZX9D1GD3KQfZ5jwDWAyEYsqnQIIEIJ";
+    const endPoint = "https://api.giphy.com/v1/gifs/";
+
+    const queryString = `${endPoint}${id}?api_key=${apiKey}`;
+
+    const xhr = new XMLHttpRequest();
+    
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            return(JSON.parse(xhr.response));
+        } else {
+            throw new Error(`Error... responce info:${xhr.status} ${xhr.statusText}`);
+        }
+    };
+
+    xhr.open('GET', queryString, true);
+    xhr.send()
+}
+
 function enableSubmitButton(event) {
     const searchPhrase = event.currentTarget.value;
 
@@ -50,7 +70,9 @@ function enableSubmitButton(event) {
 }
 
 function moveToGifPage(gif) {
-    history.pushState({}, "", `/gif/${gif.id}`);
+    const gifByIdState = {gifId: gif.Id};
+    history.pushState({gifByIdState: gifByIdState}, "", `/gif/${gif.id}`);
+
     document.getElementById("searchContainer").style.display = "none";
 
     document.getElementById("gifInfoImg").setAttribute("src", gif.images.original.url);        
@@ -92,9 +114,9 @@ function insertUploadButtonOnPage(searchProperties) {
     uploadGifsButton.onclick = () => {
         searchProperties.offset += searchProperties.limit;
 
-        const newHistoryState = history.state;
-        newHistoryState.offset = searchProperties.offset; 
-        history.replaceState(newHistoryState, "", null);
+        const newSearchState = history.state.searchState;
+        newSearchState.offset = searchProperties.offset; 
+        history.replaceState({searchState: newSearchState}, "", null);
 
         search(searchProperties).then(response => insertGifsOnPage(JSON.parse(response).data), error => console.log(error));
     }
@@ -109,9 +131,9 @@ function sendSearchRequest() {
     const offset = 0;
 
     const searchProperties = {searchPhrase, offset, limit};
-    history.pushState(searchProperties, "", `/search?q=${searchPhrase}`);
+    history.pushState({searchState: searchProperties}, "", `/search?q=${searchPhrase}`);
 
-    returnToInitialState(); 
+    returnToInitialSearchState(); 
 
     search(searchProperties).then(response => {
         insertGifsOnPage(JSON.parse(response).data); 
@@ -127,7 +149,7 @@ function moveBackToSearchPage() {
     document.getElementById("searchContainer").style.display = "";
 }
 
-function returnToInitialState() {    
+function returnToInitialSearchState() {    
     document.getElementById("results").innerHTML = "";
     document.getElementById("controlButtons").innerHTML = "";
 
