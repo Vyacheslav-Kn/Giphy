@@ -6,7 +6,28 @@
   <script src="giphy.js" defer></script>
   <title>Giphy</title>
  </head>
- <body>      
+ <body>    
+  <script>
+      window.onpopstate = function(event) {
+        if (event.state == null) {
+            returnToInitialState();
+        }
+
+        const currentState = event.state;
+        const numberOfGifUploadRequests = currentState.offset / currentState.limit + 1;
+
+        for (let i = 0; i < numberOfGifUploadRequests; i++) {
+            currentState.offset = currentState.limit * i;
+
+            search(currentState).then(response => {
+            insertGifsOnPage(JSON.parse(response).data); 
+            insertUploadButtonOnPage(currentState);
+            }, error => console.log(error));
+        }
+
+        
+      };      
+  </script>  
   <div id="searchContainer">
     <div>
         <input type="text" id="searchInput" oninput="enableSubmitButton(event)">

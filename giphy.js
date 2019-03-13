@@ -3,11 +3,13 @@ function memoizeSearch() {
     const cachedResults = {};
 
     const mSearch = function (searchProperties) {
-        const urlEncodedSearchPhrase = encodeURIComponent(searchProperties.searchPhrase);
-        const queryString = `${searchProperties.endPoint}q=${urlEncodedSearchPhrase}&api_key=${searchProperties.apiKey}&limit=${searchProperties.limit}&offset=${searchProperties.offset}`;
+        const apiKey = "hBZX9D1GD3KQfZ5jwDWAyEYsqnQIIEIJ";
+        const endPoint = "https://api.giphy.com/v1/gifs/search?";
+        
+        const queryString = `${endPoint}q=${searchProperties.searchPhrase}&api_key=${apiKey}&limit=${searchProperties.limit}&offset=${searchProperties.offset}`;
 
         return new Promise(((resolveFunc, rejectFunc) => {
-            const key = generateKey(urlEncodedSearchPhrase, searchProperties.offset);
+            const key = generateKey(searchProperties.searchPhrase, searchProperties.offset);
             const cachedResult = cachedResults[key];
 
             if (cachedResult) {
@@ -88,7 +90,12 @@ function insertUploadButtonOnPage(searchProperties) {
     uploadGifsButton.value = "upload gifs";
 
     uploadGifsButton.onclick = () => {
-        searchProperties.offset += searchProperties.limit; 
+        searchProperties.offset += searchProperties.limit;
+
+        const newHistoryState = history.state;
+        newHistoryState.offset = searchProperties.offset; 
+        history.replaceState(newHistoryState, "", null);
+
         search(searchProperties).then(response => insertGifsOnPage(JSON.parse(response).data), error => console.log(error));
     }
 
@@ -97,22 +104,14 @@ function insertUploadButtonOnPage(searchProperties) {
 
 // eslint-disable-next-line max-statements
 function sendSearchRequest() {
-    const searchPhrase = document.getElementById("searchInput").value;
-    
-    history.pushState({}, "", `/search?q=${encodeURIComponent(searchPhrase)}`);
-
-    document.getElementById("results").innerHTML = "";
-    document.getElementById("controlButtons").innerHTML = "";
-
-    document.getElementById("searchInput").value = "";
-    document.getElementById("searchSubmit").disabled = true; 
-
-    const apiKey = "hBZX9D1GD3KQfZ5jwDWAyEYsqnQIIEIJ";
-    const endPoint = "https://api.giphy.com/v1/gifs/search?";
+    const searchPhrase = encodeURIComponent(document.getElementById("searchInput").value);
     const limit = 5;
     const offset = 0;
 
-    const searchProperties = {searchPhrase, offset, limit, endPoint, apiKey};
+    const searchProperties = {searchPhrase, offset, limit};
+    history.pushState(searchProperties, "", `/search?q=${searchPhrase}`);
+
+    returnToInitialState(); 
 
     search(searchProperties).then(response => {
         insertGifsOnPage(JSON.parse(response).data); 
@@ -121,8 +120,17 @@ function sendSearchRequest() {
 }
 
 function moveBackToSearchPage() {
-    window.history.back();
+    history.back();
+
     document.getElementById("singleGif").style.display = "none";
     document.getElementById("authorInfo").style.display = "none";
     document.getElementById("searchContainer").style.display = "";
 }
+
+function returnToInitialState() {    
+    document.getElementById("results").innerHTML = "";
+    document.getElementById("controlButtons").innerHTML = "";
+
+    document.getElementById("searchInput").value = "";
+    document.getElementById("searchSubmit").disabled = true;
+} 
