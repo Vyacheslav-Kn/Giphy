@@ -20,18 +20,26 @@
             }
         }
 
-        function sendRequest(event) {
+        function sendSearchRequest(event) {
+            // const searchUrl = `${window.location.href}/search?q=${searchPhrase}`;
+            // history.pushState({state:"test"}, "Search", searchUrl);
+            document.getElementById("searchInput").value = "";
+            document.getElementById("searchSubmit").disabled = true;
+
             const apiKey = "hBZX9D1GD3KQfZ5jwDWAyEYsqnQIIEIJ";
             const searchEndpoint = "https://api.giphy.com/v1/gifs/search?";
             const limit = 5;
 
             const searchProperties = {apiKey:apiKey, endPoint:searchEndpoint, limit:limit, searchPhrase:searchPhrase};
-            Search(searchProperties).then(response => console.log(response), error => console.log(error));
+            Search(searchProperties).then(response => document.getElementById("searchResult").innerText = response, error => console.log(error));
         }
   </script>
   <div>
-      <input type="text" oninput="enableSubmitButton(event)">
-      <input type="submit" id="searchSubmit" onclick="sendRequest(event)" value="search for gifs" disabled="true">
+      <input type="text" id="searchInput" oninput="enableSubmitButton(event)">
+      <input type="submit" id="searchSubmit" onclick="sendSearchRequest(event)" value="search for gifs" disabled="true">
+  </div>
+  <div id="searchResult">
+
   </div>
  </body>
 </html>
