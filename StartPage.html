@@ -10,27 +10,52 @@
   <script>
       window.onpopstate = function(event) {
         if (event.state == null) {
-            returnToInitialState();
+            returnToInitialSearchState();
             return;
         }
 
         const currentState = event.state;
-        const numberOfGifUploadRequests = currentState.offset / currentState.limit + 1;
-        
-        document.getElementById("results").innerHTML = "";
-        document.getElementById("controlButtons").innerHTML = "";
 
-        for (let i = 0; i < numberOfGifUploadRequests; i++) {
-            currentState.offset = currentState.limit * i;
+        if (currentState.searchState) {
+            const searchState = currentState.searchState;
+            const numberOfGifUploadRequests =searchState.offset / searchState.limit + 1;
+            
+            document.getElementById("results").innerHTML = "";
+            document.getElementById("controlButtons").innerHTML = "";
 
-            search(currentState).then(response => {
-            insertGifsOnPage(JSON.parse(response).data);
-            }, error => console.log(error));
+            for (let i = 0; i < numberOfGifUploadRequests; i++) {
+                searchState.offset = searchState.limit * i;
+
+                search(searchState).then(response => {
+                insertGifsOnPage(JSON.parse(response).data);
+                }, error => console.log(error));
+            }
+
+            insertUploadButtonOnPage(searchState);
+            
+            document.getElementById("singleGif").style.display = "none";
+            document.getElementById("authorInfo").style.display = "none";
+            document.getElementById("searchContainer").style.display = "";
         }
-        
-        document.getElementById("singleGif").style.display = "none";
-        document.getElementById("authorInfo").style.display = "none";
-        document.getElementById("searchContainer").style.display = "";       
+
+        if (currentState.gifByIdState) {
+            const gifState = currentState.gifByIdState;
+            const gif = findGifById(gifState.gifId);
+
+            document.getElementById("searchContainer").style.display = "none";
+
+            document.getElementById("gifInfoImg").setAttribute("src", gif.images.original.url);        
+            document.getElementById("gifInfoDescription").innerText = `Gif info: ${gif.title} ${gif.import_datetime}`;
+
+            if (gif.user) {
+                document.getElementById("authorInfoImg").setAttribute("src", gif.user.avatar_url);
+                document.getElementById("authorInfoDescription").innerText = `Author info: ${gif.user.display_name}`;
+                document.getElementById("authorInfo").style.display = "";
+            }
+
+            document.getElementById("singleGif").style.display = "";
+        }
+               
       };      
 
       window.onload = function() {
