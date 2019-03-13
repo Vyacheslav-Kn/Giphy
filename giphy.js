@@ -70,7 +70,7 @@ function enableSubmitButton(event) {
 }
 
 function moveToGifPage(gif) {
-    const gifByIdState = {gifId: gif.Id};
+    const gifByIdState = {gifId: gif.id};
     history.pushState({gifByIdState: gifByIdState}, "", `/gif/${gif.id}`);
 
     document.getElementById("searchContainer").style.display = "none";
