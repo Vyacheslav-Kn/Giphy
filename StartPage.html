@@ -2,44 +2,88 @@
 <html>
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <script src="giphy.js"></script>
+  <link href="style.css" rel="stylesheet">
+  <script src="giphy.js" defer></script>
   <title>Giphy</title>
  </head>
- <body> 
-  <script type="text/javascript">  
-        let searchPhrase;
-
-        function enableSubmitButton(event) {
-            searchPhrase = event.currentTarget.value;
-
-            if(searchPhrase.length > 0) {
-                  document.getElementById("searchSubmit").disabled = false;
-            }
-            else{
-                  document.getElementById("searchSubmit").disabled = true;
-            }
+ <body>    
+  <script>
+      window.onpopstate = function(event) {
+        if (event.state == null) {
+            returnToInitialState();
+            return;
         }
 
-        function sendSearchRequest(event) {
-            // const searchUrl = `${window.location.href}/search?q=${searchPhrase}`;
-            // history.pushState({state:"test"}, "Search", searchUrl);
-            document.getElementById("searchInput").value = "";
-            document.getElementById("searchSubmit").disabled = true;
+        const currentState = event.state;
+        const numberOfGifUploadRequests = currentState.offset / currentState.limit + 1;
+        
+        document.getElementById("results").innerHTML = "";
+        document.getElementById("controlButtons").innerHTML = "";
 
-            const apiKey = "hBZX9D1GD3KQfZ5jwDWAyEYsqnQIIEIJ";
-            const searchEndpoint = "https://api.giphy.com/v1/gifs/search?";
-            const limit = 5;
+        for (let i = 0; i < numberOfGifUploadRequests; i++) {
+            currentState.offset = currentState.limit * i;
 
-            const searchProperties = {apiKey:apiKey, endPoint:searchEndpoint, limit:limit, searchPhrase:searchPhrase};
-            Search(searchProperties).then(response => document.getElementById("searchResult").innerText = response, error => console.log(error));
+            search(currentState).then(response => {
+            insertGifsOnPage(JSON.parse(response).data);
+            }, error => console.log(error));
         }
-  </script>
-  <div>
-      <input type="text" id="searchInput" oninput="enableSubmitButton(event)">
-      <input type="submit" id="searchSubmit" onclick="sendSearchRequest(event)" value="search for gifs" disabled="true">
-  </div>
-  <div id="searchResult">
+        
+        document.getElementById("singleGif").style.display = "none";
+        document.getElementById("authorInfo").style.display = "none";
+        document.getElementById("searchContainer").style.display = "";       
+      };      
 
+      window.onload = function() {
+        if (event.state == null) {
+            returnToInitialState();
+            return;
+        }
+
+        const currentState = event.state;
+        const numberOfGifUploadRequests = currentState.offset / currentState.limit + 1;
+
+        for (let i = 0; i < numberOfGifUploadRequests; i++) {
+            currentState.offset = currentState.limit * i;
+
+            search(currentState).then(response => {
+            insertGifsOnPage(JSON.parse(response).data); 
+            insertUploadButtonOnPage(currentState);
+            }, error => console.log(error));
+        }
+        
+        document.getElementById("singleGif").style.display = "none";
+        document.getElementById("authorInfo").style.display = "none";
+        document.getElementById("searchContainer").style.display = ""; 
+      }
+  </script>  
+  <div id="searchContainer">
+    <div>
+        <input type="text" id="searchInput" oninput="enableSubmitButton(event)">
+        <input type="submit" id="searchSubmit" onclick="sendSearchRequest()" value="search for gifs" disabled="true">  
+    </div>
+    <div id="resultsContainer">
+        <div id="results">
+
+        </div>         
+        <div id="controlButtons">
+
+        </div>
+    </div>    
   </div>
- </body>
+  <div id="singleGif" style="display:none">
+    <div id="gifInfo">
+        <img src="" id="gifInfoImg">
+        <div id="gifInfoDescription">
+
+        </div>
+    </div>
+    <div id="authorInfo">
+        <img src="" id="authorInfoImg">
+        <div id="authorInfoDescription">
+
+        </div>
+    </div>
+    <input type="submit" value="move back" onclick="moveBackToSearchPage(event)">
+  </div>
+</body>
 </html>
