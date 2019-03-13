@@ -16,13 +16,15 @@
 
         const currentState = event.state;
         const numberOfGifUploadRequests = currentState.offset / currentState.limit + 1;
+        
+        document.getElementById("results").innerHTML = "";
+        document.getElementById("controlButtons").innerHTML = "";
 
         for (let i = 0; i < numberOfGifUploadRequests; i++) {
             currentState.offset = currentState.limit * i;
 
             search(currentState).then(response => {
-            insertGifsOnPage(JSON.parse(response).data); 
-            insertUploadButtonOnPage(currentState);
+            insertGifsOnPage(JSON.parse(response).data);
             }, error => console.log(error));
         }
         
