@@ -58,27 +58,8 @@
                
       };      
 
-      window.onload = function() {
-        if (event.state == null) {
-            returnToInitialState();
-            return;
-        }
-
-        const currentState = event.state;
-        const numberOfGifUploadRequests = currentState.offset / currentState.limit + 1;
-
-        for (let i = 0; i < numberOfGifUploadRequests; i++) {
-            currentState.offset = currentState.limit * i;
-
-            search(currentState).then(response => {
-            insertGifsOnPage(JSON.parse(response).data); 
-            insertUploadButtonOnPage(currentState);
-            }, error => console.log(error));
-        }
-        
-        document.getElementById("singleGif").style.display = "none";
-        document.getElementById("authorInfo").style.display = "none";
-        document.getElementById("searchContainer").style.display = ""; 
+      window.onload = function(event) { 
+          
       }
   </script>  
   <div id="searchContainer">
