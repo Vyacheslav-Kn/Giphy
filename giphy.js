@@ -48,7 +48,7 @@ function enableSubmitButton(event) {
 }
 
 function moveToGifPage(gif) {
-    // history.pushState({}, "", `/gif/${gif.id}`);
+    history.pushState({}, "", `/gif/${gif.id}`);
     document.getElementById("searchContainer").style.display = "none";
 
     document.getElementById("gifInfoImg").setAttribute("src", gif.images.original.url);        
@@ -97,12 +97,13 @@ function insertUploadButtonOnPage(searchProperties) {
 
 // eslint-disable-next-line max-statements
 function sendSearchRequest() {
-    // history.pushState({}, "", `/search?q=${searchPhrase}`);
+    const searchPhrase = document.getElementById("searchInput").value;
+    
+    history.pushState({}, "", `/search?q=${encodeURIComponent(searchPhrase)}`);
 
     document.getElementById("results").innerHTML = "";
     document.getElementById("controlButtons").innerHTML = "";
 
-    const searchPhrase = document.getElementById("searchInput").value;
     document.getElementById("searchInput").value = "";
     document.getElementById("searchSubmit").disabled = true; 
 
@@ -120,7 +121,7 @@ function sendSearchRequest() {
 }
 
 function moveBackToSearchPage() {
-    // window.history.back();
+    window.history.back();
     document.getElementById("singleGif").style.display = "none";
     document.getElementById("authorInfo").style.display = "none";
     document.getElementById("searchContainer").style.display = "";
