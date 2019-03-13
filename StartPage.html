@@ -6,97 +6,7 @@
   <script src="giphy.js" defer></script>
   <title>Giphy</title>
  </head>
- <body>
- <script type="text/javascript">  
-    function enableSubmitButton(event) {
-        const searchPhrase = event.currentTarget.value;
-
-        if(searchPhrase.length > 0) {
-              document.getElementById("searchSubmit").disabled = false;
-        }
-        else{
-              document.getElementById("searchSubmit").disabled = true;
-        }
-    }
-
-    function sendSearchRequest(event) {
-        // history.pushState({}, "", `/search?q=${searchPhrase}`);
-
-        document.getElementById("results").innerHTML = "";
-        document.getElementById("controlButtons").innerHTML = "";
-
-        const searchPhrase = document.getElementById("searchInput").value;
-        document.getElementById("searchInput").value = "";
-        document.getElementById("searchSubmit").disabled = true; 
-
-        const apiKey = "hBZX9D1GD3KQfZ5jwDWAyEYsqnQIIEIJ";
-        const searchEndpoint = "https://api.giphy.com/v1/gifs/search?";
-        const limit = 5;
-        const offset = 0;
-
-        const searchProperties = {apiKey:apiKey, endPoint:searchEndpoint, limit:limit, searchPhrase:searchPhrase, offset:offset};
-
-        search(searchProperties).then(response => {
-            insertGifsOnPage(JSON.parse(response).data); 
-            insertUploadButtonOnPage(searchProperties);
-        }, error => console.log(error));
-    }
-
-    function insertGifsOnPage(gifs) {
-        const gifsPartContainer = document.createElement("div");
-        gifsPartContainer.className = "gifsResultContainer";
-
-        gifs.forEach(element => {
-            const gifLink = document.createElement("a");
-            gifLink.className = "gifLink";
-            gifLink.onclick = () => moveToGifPage(element);
-
-            const gifImage = document.createElement("img");
-            gifImage.src = element.images.fixed_height_small.url;
-
-            gifLink.appendChild(gifImage);
-            gifsPartContainer.appendChild(gifLink);
-        });
-
-        document.getElementById("results").appendChild(gifsPartContainer);
-    }
-
-    function insertUploadButtonOnPage(searchProperties) {
-        const uploadGifsButton = document.createElement("input");
-        uploadGifsButton.type = "submit";
-        uploadGifsButton.value = "upload gifs";
-        uploadGifsButton.onclick = () => {
-            searchProperties.offset += searchProperties.limit; 
-            search(searchProperties).then(response => insertGifsOnPage(JSON.parse(response).data), error => console.log(error));
-        }
-
-        document.getElementById("controlButtons").appendChild(uploadGifsButton);
-    }
-
-    function moveToGifPage(gif) {
-        // history.pushState({}, "", `/gif/${gif.id}`);
-        document.getElementById("searchContainer").style.display = "none";
-
-        const gifImg = document.createElement("img");
-        gifImg.setAttribute("src", gif.images.original.url);
-        document.getElementsByClassName("gifInfo")[0].appendChild(gifImg);
-        
-        document.getElementsByClassName("gifInfo")[0].innerText = `Gif info: ${gif.title} ${gif.import_datetime}`;
-        if (gif.user) {
-            const y = document.getElementById("authorInfoImg");
-            document.getElementById("authorInfoImg").setAttribute("src", gif.user.avatar_url);
-            document.getElementsByClassName("authorInfo")[0].innerText = `Author info: ${gif.user.display_name}`;
-        }
-
-        document.getElementById("singleGif").style.display = "";
-    }
-
-    function moveBackToSearchPage(event) {
-        document.getElementById("singleGif").style.display = "none";
-        document.getElementById("searchContainer").style.display = "";
-        // window.history.back();
-    }
-</script>      
+ <body>      
   <div id="searchContainer">
     <div>
         <input type="text" id="searchInput" oninput="enableSubmitButton(event)">
@@ -112,12 +22,17 @@
     </div>    
   </div>
   <div id="singleGif" style="display:none">
-    <div class="gifInfo">
+    <div id="gifInfo">
+        <img src="" id="gifInfoImg">
+        <div id="gifInfoDescription">
 
+        </div>
     </div>
-    <div class="authorInfo">
+    <div id="authorInfo">
         <img src="" id="authorInfoImg">
+        <div id="authorInfoDescription">
 
+        </div>
     </div>
     <input type="submit" value="move back" onclick="moveBackToSearchPage(event)">
   </div>

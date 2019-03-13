@@ -10,7 +10,10 @@
     margin-bottom: 30px;
 }
 
-.authorInfo{
-    margin-top: 25px;
+#gifInfo{
+    margin-bottom:25px;
+}
+
+#authorInfo{
     margin-bottom: 15px;
 }
