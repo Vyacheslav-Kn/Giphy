@@ -1,99 +1,14 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
- <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link href="style.css" rel="stylesheet">
-  <script src="giphy.js" defer></script>
-  <title>Giphy</title>
- </head>
- <body>    
-  <script>
-    function insertGifOnPage(gif){
-        document.getElementById("searchContainer").style.display = "none";
-
-        document.getElementById("gifInfoImg").setAttribute("src", gif.images.original.url);        
-        document.getElementById("gifInfoDescription").innerText = `Gif info: ${gif.title} ${gif.import_datetime}`;
-
-        if (gif.user) {
-            document.getElementById("authorInfoImg").setAttribute("src", gif.user.avatar_url);
-            document.getElementById("authorInfoDescription").innerText = `Author info: ${gif.user.display_name}`;
-            document.getElementById("authorInfo").style.display = "";
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Giphy</title>
+</head>
+<body onload="redirect()">
+    <script language=javascript>
+        function redirect() {
+            window.location = "https://vyacheslav-kn.github.io/Giphy/";
         }
-
-        document.getElementById("singleGif").style.display = "";
-    }
-
-    function manageBrowserButtons(event) {
-        if (history.state == null) {
-            const location = document.location;
-            returnToInitialSearchState();
-            
-            return;
-        }
-
-        const currentState = history.state;
-
-        if (currentState.searchState) {
-            const searchState = currentState.searchState;
-            const numberOfGifUploadRequests = searchState.offset / searchState.limit + 1;
-            
-            document.getElementById("results").innerHTML = "";
-            document.getElementById("controlButtons").innerHTML = "";
-
-            for (let i = 0; i < numberOfGifUploadRequests; i++) {
-                searchState.offset = searchState.limit * i;
-
-                search(searchState).then(response => {
-                insertGifsOnPage(JSON.parse(response).data);
-                }, error => console.log(error));
-            }
-
-            insertUploadButtonOnPage(searchState);
-            
-            document.getElementById("singleGif").style.display = "none";
-            document.getElementById("authorInfo").style.display = "none";
-            document.getElementById("searchContainer").style.display = "";
-        }
-
-        if (currentState.gifByIdState) {
-            const gifState = currentState.gifByIdState;
-            const gif = findGifById(gifState.gifId).then(response => {
-                insertGifOnPage(JSON.parse(response).data);
-                }, error => console.log(error));            
-        }    
-    }
-
-    window.onpopstate = (event) => manageBrowserButtons(event);
-    window.onload = (event) => manageBrowserButtons(event);
-  </script>  
-  <div id="searchContainer">
-    <div>
-        <input type="text" id="searchInput" oninput="enableSubmitButton(event)">
-        <input type="submit" id="searchSubmit" onclick="sendSearchRequest()" value="search for gifs" disabled="true">  
-    </div>
-    <div id="resultsContainer">
-        <div id="results">
-
-        </div>         
-        <div id="controlButtons">
-
-        </div>
-    </div>    
-  </div>
-  <div id="singleGif" style="display:none">
-    <div id="gifInfo">
-        <img src="" id="gifInfoImg">
-        <div id="gifInfoDescription">
-
-        </div>
-    </div>
-    <div id="authorInfo">
-        <img src="" id="authorInfoImg">
-        <div id="authorInfoDescription">
-
-        </div>
-    </div>
-    <input type="submit" value="move back" onclick="moveBackToSearchPage(event)">
-  </div>
+    </script>
 </body>
 </html>
