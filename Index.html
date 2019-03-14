@@ -24,19 +24,18 @@
     }
 
     function manageBrowserButtons(event) {
-        if (event.state == null) {
-            
+        if (history.state == null) {
             const location = document.location;
             returnToInitialSearchState();
             
             return;
         }
 
-        const currentState = event.state;
+        const currentState = history.state;
 
         if (currentState.searchState) {
             const searchState = currentState.searchState;
-            const numberOfGifUploadRequests =searchState.offset / searchState.limit + 1;
+            const numberOfGifUploadRequests = searchState.offset / searchState.limit + 1;
             
             document.getElementById("results").innerHTML = "";
             document.getElementById("controlButtons").innerHTML = "";
