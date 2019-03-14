@@ -75,7 +75,8 @@ function enableSubmitButton(event) {
 function moveToGifPage(gif) {
 
     const gifByIdState = {gifId: gif.id};
-    history.pushState({gifByIdState: gifByIdState}, "", `/Giphy/gif/${gif.id}`);
+    //history.pushState({gifByIdState: gifByIdState}, "", `/Giphy/gif/${gif.id}`);
+    history.pushState({gifByIdState: gifByIdState}, "", null);
 
     document.getElementById("searchContainer").style.display = "none";
 
@@ -135,7 +136,8 @@ function sendSearchRequest() {
     const offset = 0;
 
     const searchProperties = {searchPhrase, offset, limit};
-    history.pushState({searchState: searchProperties}, "", `/Giphy/search?q=${searchPhrase}`);
+    //history.pushState({searchState: searchProperties}, "", `/Giphy/search?q=${searchPhrase}`);
+    history.pushState({searchState: searchProperties}, "", null);
 
     returnToInitialSearchState(); 
 
