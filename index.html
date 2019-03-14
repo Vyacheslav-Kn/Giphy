@@ -32,7 +32,7 @@
             returnToInitialSearchState();            
             return;
          }
-         currentState = localStorage.getItem("historyState");  
+         currentState = JSON.parse(localStorage.getItem("historyState"));  
         }
 
         if (currentState.searchState) {
