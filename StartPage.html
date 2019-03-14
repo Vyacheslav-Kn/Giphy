@@ -26,7 +26,9 @@
             search(currentState).then(response => {
             insertGifsOnPage(JSON.parse(response).data);
             }, error => console.log(error));
-        }
+        } 
+        
+        insertUploadButtonOnPage(currentState);
         
         document.getElementById("singleGif").style.display = "none";
         document.getElementById("authorInfo").style.display = "none";
