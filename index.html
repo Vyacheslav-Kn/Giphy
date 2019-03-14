@@ -25,12 +25,15 @@
     }
 
     function manageBrowserButtons(event) {
-        if (history.state == null) {            
+        const currentState = history.state;
+     
+        if (history.state == null) {  
+         if (localStorage.getItem("historyState") ==  null) {
             returnToInitialSearchState();            
             return;
+         }
+         currentState = localStorage.getItem("historyState");  
         }
-
-        const currentState = history.state;
 
         if (currentState.searchState) {
             const searchState = currentState.searchState;
