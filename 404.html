@@ -8,7 +8,7 @@
     <script language=javascript>
         function redirect() {
             const state = history.state;
-            localStorage.setItem('historyState', state);
+            localStorage.setItem('historyState', JSON.stringify(state));
             window.location = "https://vyacheslav-kn.github.io/Giphy/";
         }
     </script>
