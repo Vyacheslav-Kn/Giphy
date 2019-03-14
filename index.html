@@ -25,7 +25,7 @@
     }
 
     function manageBrowserButtons(event) {
-        const currentState = history.state;
+        let currentState = history.state;
      
         if (history.state == null) {  
          if (localStorage.getItem("historyState") ==  null) {
