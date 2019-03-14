@@ -62,10 +62,48 @@
                
       };      
 
-      window.onload = function(event) { 
+      function tempFunc() {
+        history.pushState({check: "new state"}, "", null);
+      }
 
+      window.onload = function(event) { 
+        const previousState = history.state;
+
+        const currentState = previousState;
+
+        if (currentState.searchState) {
+            const searchState = currentState.searchState;
+            const numberOfGifUploadRequests =searchState.offset / searchState.limit + 1;
+            
+            document.getElementById("results").innerHTML = "";
+            document.getElementById("controlButtons").innerHTML = "";
+
+            for (let i = 0; i < numberOfGifUploadRequests; i++) {
+                searchState.offset = searchState.limit * i;
+
+                search(searchState).then(response => {
+                insertGifsOnPage(JSON.parse(response).data);
+                }, error => console.log(error));
+            }
+
+            insertUploadButtonOnPage(searchState);
+            
+            document.getElementById("singleGif").style.display = "none";
+            document.getElementById("authorInfo").style.display = "none";
+            document.getElementById("searchContainer").style.display = "";
+        }
+
+        if (currentState.gifByIdState) {
+            const gifState = currentState.gifByIdState;
+            const gif = findGifById(gifState.gifId).then(response => {
+                insertGifOnPage(JSON.parse(response).data);
+                }, error => console.log(error));            
+        }
+
+        console.log("time");
       }
   </script>  
+  <input type="submit" onclick="tempFunc()" value="add state">  
   <div id="searchContainer">
     <div>
         <input type="text" id="searchInput" oninput="enableSubmitButton(event)">
