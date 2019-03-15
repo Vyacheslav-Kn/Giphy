@@ -15,6 +15,7 @@
             localStorage.setItem('historyState', JSON.stringify(state));
             localStorage.setItem('pathName', JSON.stringify(pathName));
             window.location = "https://vyacheslav-kn.github.io/Giphy/";
+            history.pushState({url: pathName}, "", null);
         }
     </script>
 </body>
