@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Giphy</title>
+</head>
+<body onload="redirect()">
+    <script language=javascript>
+        function redirect() {
+            const state = history.state;
+            localStorage.setItem('historyState', JSON.stringify(state));
+            window.location = "https://vyacheslav-kn.github.io/Giphy/";
+        }
+    </script>
+</body>
+</html>
