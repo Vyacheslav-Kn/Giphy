@@ -35,6 +35,8 @@
          currentState = JSON.parse(localStorage.getItem("historyState"));  
          currentUrl = `${window.location.hostname}${JSON.parse(localStorage.getItem("pathName"))}`;
          history.replaceState(currentState, "", currentUrl);
+         localStorage.removeItem("historyState");
+         localStorage.removeItem("pathName");
         }
 
         if (currentState.searchState) {
