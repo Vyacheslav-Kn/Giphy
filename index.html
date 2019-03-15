@@ -60,6 +60,7 @@
         }
 
         if (currentState.gifByIdState) {
+            const pathName = window.location.pathname;
             const gifState = currentState.gifByIdState;
             const gif = findGifById(gifState.gifId).then(response => {
                 insertGifOnPage(JSON.parse(response).data);
