@@ -33,11 +33,13 @@
             return;
          }
          currentState = JSON.parse(localStorage.getItem("historyState"));  
+         currentUrl = `${location.href.hostname}${JSON.parse(localStorage.getItem("pathName"))}`;
+         history.pushState(currentState, "", currentUrl);
         }
 
         if (currentState.searchState) {
             const searchState = currentState.searchState;
-            const numberOfGifUploadRequests =searchState.offset / searchState.limit + 1;
+            const numberOfGifUploadRequests = searchState.offset / searchState.limit + 1;
             
             document.getElementById("results").innerHTML = "";
             document.getElementById("controlButtons").innerHTML = "";
@@ -67,11 +69,6 @@
 
     window.onpopstate = (event) => manageBrowserButtons(event);
     window.onload = (event) => manageBrowserButtons(event);
-
-    function tempFunc() {
-        history.pushState({check: "new state"}, "", null);
-    }
-
   </script>   
   <div id="searchContainer">
     <div>
