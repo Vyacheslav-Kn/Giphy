@@ -73,9 +73,8 @@ function enableSubmitButton(event) {
 }
 
 function moveToGifPage(gif) {
-
     const gifByIdState = {gifId: gif.id};
-    history.pushState({gifByIdState: gifByIdState}, "", `gif/${gif.id}`);
+    history.pushState({gifByIdState}, "", `gif/${gif.id}`);
 
     document.getElementById("searchContainer").style.display = "none";
 
@@ -146,6 +145,10 @@ function sendSearchRequest() {
 }
 
 function moveBackToSearchPage() {
+    if (history.state.moveToMainPage) {
+        window.location = "https://vyacheslav-kn.github.io/Giphy/";
+    }
+
     history.back();
 
     document.getElementById("singleGif").style.display = "none";

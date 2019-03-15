@@ -5,7 +5,7 @@
   <link href="style.css" rel="stylesheet">
   <script src="giphy.js" defer></script>
   <title>Giphy</title>
-  <base href="https://vyacheslav-kn.github.io/Giphy/">
+  <!--<base href="https://vyacheslav-kn.github.io/Giphy/">-->
  </head>
  <body>    
   <script>
@@ -26,15 +26,45 @@
 
     function manageBrowserButtons(event) {
         let currentState = history.state;
-     
+        let currentUrl = `${JSON.parse(localStorage.getItem("pathName")).replace("/Giphy/","")}`;
+
         if (history.state == null) {  
-         if (localStorage.getItem("historyState") ==  null) {
-            returnToInitialSearchState();            
+         if (localStorage.getItem("historyState") == null) {
+             const urlToSearchMethod = "/search?";
+             const urlToGifMethod = "/gif/";
+
+             if (currentUrl.indexOf(urlToSearchMethod) >= 0) {
+                const searchPhrase = currentUrl.substring(currentUrl.indexOf(urlToSearchMethod) + urlToSearchMethod.length);
+                const searchProperties = {searchPhrase: searchPhrase, limit: 5, offset: 0};
+                history.replaceState({searchState: searchProperties}, "", null);
+
+                search(searchProperties).then(response => {
+                insertGifsOnPage(JSON.parse(response).data);
+                insertUploadButtonOnPage(searchProperties);
+                }, error => console.log(error));
+
+                return;
+             }
+
+             if (currentUrl.indexOf(urlToGifMethod) >= 0) {
+                const gifId = currentUrl.substring(currentUrl.indexOf(urlToGifMethod) + urlToGifMethod.length);
+                history.replaceState({gifId: gifId, returnToMainPage: true}, "", null);
+
+                findGifById(gifId).then(response => {
+                insertGifOnPage(JSON.parse(response).data);
+                }, error => console.log(error)); 
+
+                return;
+             }
+
+            returnToInitialSearchState();
             return;
          }
+
          currentState = JSON.parse(localStorage.getItem("historyState"));  
-         currentUrl = `${location.href.hostname}${JSON.parse(localStorage.getItem("pathName"))}`;
-         history.pushState(currentState, "", currentUrl);
+         history.replaceState(currentState, "", currentUrl);
+         localStorage.removeItem("historyState");
+         localStorage.removeItem("pathName");
         }
 
         if (currentState.searchState) {
@@ -60,6 +90,7 @@
         }
 
         if (currentState.gifByIdState) {
+            const pathName = window.location.pathname;
             const gifState = currentState.gifByIdState;
             const gif = findGifById(gifState.gifId).then(response => {
                 insertGifOnPage(JSON.parse(response).data);
