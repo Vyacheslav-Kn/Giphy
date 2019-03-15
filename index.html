@@ -29,7 +29,7 @@
      
         if (history.state == null) {  
          if (localStorage.getItem("historyState") ==  null) {
-            returnToInitialSearchState();            
+            window.location.replace("https://vyacheslav-kn.github.io/Giphy/");            
             return;
          }
          currentState = JSON.parse(localStorage.getItem("historyState"));  
