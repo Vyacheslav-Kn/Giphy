@@ -1,13 +1,9 @@
 import {searchGifsByPhrase} from './search.js'
 
-export function unlockSearchButton (event) {
+export function tryToUnlockSearchButton (event) {
     const searchPhrase = event.currentTarget.value
 
-    if (searchPhrase.length) {
-        document.getElementById('searchSubmit').disabled = false
-    } else {
-        document.getElementById('searchSubmit').disabled = true
-    }
+    document.getElementById('searchSubmit').disabled = Boolean(searchPhrase.length)
 }
 
 export function insertGifOnPage (gif) {
@@ -63,7 +59,9 @@ export function insertLoadButtonOnPage ({searchPhrase, limit, offset}) {
         newSearchState.offset = offset
         history.replaceState({searchState: newSearchState}, '', null)
 
-        searchGifsByPhrase({searchPhrase, offset, limit}).then(response => insertLoadedGifsOnPage(JSON.parse(response).data), error => console.log(error))
+        searchGifsByPhrase({searchPhrase, offset, limit}).then(response => {
+            insertLoadedGifsOnPage(JSON.parse(response).data)
+        }, error => console.log(error))
     }
 
     document.getElementById('controlButtons').appendChild(loadGifsButton)
@@ -94,9 +92,12 @@ export function sendSearchRequest () {
 }
 
 export function moveBackToSearchPage () {
+    const urlToGifMethod = 'gif/'
     if (history.state.isMovedFromMainPage) {
-        window.location = 'https://vyacheslav-kn.github.io/Giphy/'
-        return
+        if (window.location.indexOf(urlToGifMethod) >= 0) {
+            window.location = window.location.substring(0, window.location.indexOf(urlToGifMethod))
+            return
+        }       
     }
 
     history.back()

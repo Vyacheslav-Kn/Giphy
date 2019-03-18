@@ -77,7 +77,7 @@ export function manageBrowserButtons () {
     let currentState = history.state
     let currentUrl = window.location.href 
     if (localStorage.getItem('pathName') !== null) {
-        currentUrl = `${JSON.parse(localStorage.getItem('pathName')).replace('/Giphy/', '')}`;
+        currentUrl = `${JSON.parse(localStorage.getItem('pathName')).replace('/Giphy/', '')}`
     } 
 
     if (history.state === null) {

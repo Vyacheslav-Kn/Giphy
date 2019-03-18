@@ -3,24 +3,20 @@
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link href="style.css" rel="stylesheet">
-  <!--
-  <script type="module" src="./manage-browser-buttons.js"></script>
-  <script type="module" src="./front.js"></script>
-  -->
   <title>Giphy</title>
  </head>
  <body> 
 <script type="module">
-  import { unlockSearchButton, sendSearchRequest, moveBackToSearchPage } from './front.js'
+  import { tryToUnlockSearchButton, sendSearchRequest, moveBackToSearchPage } from './front.js'
   import { manageBrowserButtons } from './manage-browser-buttons.js'
 
-  document.getElementById("searchInput").oninput = (event) => unlockSearchButton(event);
-  document.getElementById("searchSubmit").onclick = () => sendSearchRequest();
-  document.getElementById("moveBackSubmit").onclick = (event) => moveBackToSearchPage(event);
+  document.getElementById("searchInput").addEventListener("oninput", tryToUnlockSearchButton)
+  document.getElementById("searchSubmit").addEventListener("onclick", sendSearchRequest)
+  document.getElementById("moveBackSubmit").addEventListener("onclick", moveBackToSearchPage)
   
-  window.onpopstate = (event) => manageBrowserButtons(event);
-  window.onload = (event) => manageBrowserButtons(event);
-</script>    
+  window.addEventListener("onpopstate", manageBrowserButtons);
+  window.addEventListener("onload", manageBrowserButtons);
+</script>
   <div id="searchContainer">
     <div>
         <input type="text" id="searchInput">
@@ -29,11 +25,11 @@
     <div id="resultsContainer">
         <div id="results">
 
-        </div>         
+        </div>
         <div id="controlButtons">
 
         </div>
-    </div>    
+    </div>
   </div>
   <div id="gifContainer" style="display: none">
     <div id="gifInfo">

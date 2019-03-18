@@ -7,6 +7,8 @@
 <body onload="redirect()">
     <script language=javascript>
         function redirect() {
+            const urlToSearchMethod = 'search?q='
+            const urlToGifMethod = 'gif/'
             const state = history.state;
             let pathName = window.location.pathname;
             if (window.location.search) {
@@ -14,7 +16,13 @@
             }
             localStorage.setItem('historyState', JSON.stringify(state));
             localStorage.setItem('pathName', JSON.stringify(pathName));
-            window.location = "https://vyacheslav-kn.github.io/Giphy/";
+
+            if (window.location.indexOf(urlToSearchMethod) >= 0) {
+                window.location = window.location.substring(0, window.location.indexOf(urlToSearchMethod))
+                return
+            }
+
+            window.location = window.location.substring(0, window.location.indexOf(urlToGifMethod))
         }
     </script>
 </body>
