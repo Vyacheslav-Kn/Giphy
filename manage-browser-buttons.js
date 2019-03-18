@@ -58,7 +58,7 @@ function preparePageWhenUserComesByPressingBrowserButtons (currentState) {
 
         front.insertLoadButtonOnPage(searchState)
 
-        document.getElementById('singleGif').style.display = 'none'
+        document.getElementById('gifContainer').style.display = 'none'
         document.getElementById('authorInfo').style.display = 'none'
         document.getElementById('searchContainer').style.display = ''
     }
