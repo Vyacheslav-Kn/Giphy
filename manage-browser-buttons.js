@@ -1,5 +1,5 @@
-import * as front from 'front.js'
-import {searchGifById, searchGifsByPhrase} from 'search.js'
+import * as front from './front.js'
+import {searchGifById, searchGifsByPhrase} from './search.js'
 
 // eslint-disable-next-line max-statements
 function preparePageWhenUserComesByReference (currentUrl) {

@@ -1,4 +1,4 @@
-import {searchGifsByPhrase} from 'search.js'
+import {searchGifsByPhrase} from './search.js'
 
 export function unlockSearchButton (event) {
     const searchPhrase = event.currentTarget.value
