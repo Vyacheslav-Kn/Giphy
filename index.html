@@ -16,7 +16,7 @@
 
   document.getElementById("searchInput").oninput = (event) => unlockSearchButton(event);
   document.getElementById("searchSubmit").onclick = () => sendSearchRequest();
-  document.getElementById("moveBackSubmit").oninput = (event) => moveBackToSearchPage(event);
+  document.getElementById("moveBackSubmit").onclick = (event) => moveBackToSearchPage(event);
   
   window.onpopstate = (event) => manageBrowserButtons(event);
   window.onload = (event) => manageBrowserButtons(event);
