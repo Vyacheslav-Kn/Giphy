@@ -11,13 +11,13 @@
  </head>
  <body> 
 <script type="module">
-  import { unlockSearchButton, sendSearchRequest, moveBackToSearchPage } from './front.js'
-  import { manageBrowserButtons } from './manage-browser-buttons.js'
+  import { unlockSearchButton, sendSearchRequest, moveBackToSearchPage } from 'front.js'
+  import { manageBrowserButtons } from 'manage-browser-buttons.js'
 
   document.getElementById("searchInput").oninput = (event) => unlockSearchButton(event);
   document.getElementById("searchSubmit").onclick = () => sendSearchRequest();
   document.getElementById("moveBackSubmit").oninput = (event) => moveBackToSearchPage(event);
-  
+
   window.onpopstate = (event) => manageBrowserButtons(event);
   window.onload = (event) => manageBrowserButtons(event);
 </script>    

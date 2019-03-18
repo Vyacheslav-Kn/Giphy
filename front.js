@@ -1,4 +1,4 @@
-import {searchGifsByPhrase} from './search'
+import {searchGifsByPhrase} from 'search.js'
 
 export function unlockSearchButton (event) {
     const searchPhrase = event.currentTarget.value
@@ -10,7 +10,7 @@ export function unlockSearchButton (event) {
     }
 }
 
-function insertGifOnPage (gif) {
+export function insertGifOnPage (gif) {
     document.getElementById('searchContainer').style.display = 'none'
 
     document.getElementById('gifInfoImg').src = gif.images.original.url
@@ -25,14 +25,14 @@ function insertGifOnPage (gif) {
     document.getElementById('gifContainer').style.display = ''
 }
 
-function moveToGifPage (gif) {
+export function moveToGifPage (gif) {
     const gifState = {gifId: gif.id}
     history.pushState({gifState}, '', `gif/${gif.id}`)
 
     insertGifOnPage(gif)
 }
 
-function insertLoadedGifsOnPage (gifs) {
+export function insertLoadedGifsOnPage (gifs) {
     const loadedGifsContainer = document.createElement('div')
     loadedGifsContainer.className = 'loadedGifsContainer'
 
@@ -51,7 +51,7 @@ function insertLoadedGifsOnPage (gifs) {
     document.getElementById('results').appendChild(loadedGifsContainer)
 }
 
-function insertLoadButtonOnPage ({searchPhrase, limit, offset}) {
+export function insertLoadButtonOnPage ({searchPhrase, limit, offset}) {
     const loadGifsButton = document.createElement('input')
     loadGifsButton.type = 'submit'
     loadGifsButton.value = 'load gifs'
@@ -69,7 +69,7 @@ function insertLoadButtonOnPage ({searchPhrase, limit, offset}) {
     document.getElementById('controlButtons').appendChild(loadGifsButton)
 }
 
-function clearSearchElements () {
+export function clearSearchElements () {
     document.getElementById('results').innerHTML = ''
     document.getElementById('controlButtons').innerHTML = ''
 
