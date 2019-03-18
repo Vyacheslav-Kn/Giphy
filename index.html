@@ -3,19 +3,28 @@
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link href="style.css" rel="stylesheet">
+  <!--
   <script type="module" src="./manage-browser-buttons.js"></script>
-  <script type="module" src="./front.mjs"></script>
+  <script type="module" src="./front.js"></script>
+  -->
   <title>Giphy</title>
  </head>
- <body>    
-  <script> 
-    window.onpopstate = (event) => manageBrowserButtons(event);
-    window.onload = (event) => manageBrowserButtons(event);
-  </script>   
+ <body> 
+<script type="module">
+  import { unlockSearchButton, sendSearchRequest, moveBackToSearchPage } from './front.js'
+  import { manageBrowserButtons } from './manage-browser-buttons.js'
+
+  document.getElementById("searchInput").oninput = (event) => unlockSearchButton(event);
+  document.getElementById("searchSubmit").onclick = () => sendSearchRequest();
+  document.getElementById("moveBackSubmit").oninput = (event) => moveBackToSearchPage(event);
+  
+  window.onpopstate = (event) => manageBrowserButtons(event);
+  window.onload = (event) => manageBrowserButtons(event);
+</script>    
   <div id="searchContainer">
     <div>
-        <input type="text" id="searchInput" oninput="unlockSearchButton(event)">
-        <input type="submit" id="searchSubmit" onclick="sendSearchRequest()" value="search for gifs" disabled="true">  
+        <input type="text" id="searchInput">
+        <input type="submit" id="searchSubmit" value="search for gifs" disabled="true">  
     </div>
     <div id="resultsContainer">
         <div id="results">
@@ -39,7 +48,7 @@
 
         </div>
     </div>
-    <input type="submit" value="move back" onclick="moveBackToSearchPage(event)">
+    <input type="submit" id="moveBackSubmit" value="move back" onclick="moveBackToSearchPage(event)">
   </div>
 </body>
 </html>
