@@ -39,7 +39,7 @@ function memoizeSearch () {
 
 export const searchGifsByPhrase = memoizeSearch()
 
-export function searchGifById (id) {
+export function getGifById (id) {
     return new Promise((resolve, reject) => {
         const apiKey = 'hBZX9D1GD3KQfZ5jwDWAyEYsqnQIIEIJ'
         const endPoint = 'https://api.giphy.com/v1/gifs/'

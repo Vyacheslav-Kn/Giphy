@@ -5,22 +5,15 @@
   <link href="style.css" rel="stylesheet">
   <title>Giphy</title>
  </head>
- <body> 
+ <body>
 <script type="module">
-  import { tryToUnlockSearchButton, sendSearchRequest, moveBackToSearchPage } from './front.js'
-  import { manageBrowserButtons } from './manage-browser-buttons.js'
-
-  document.getElementById("searchInput").addEventListener("oninput", tryToUnlockSearchButton)
-  document.getElementById("searchSubmit").addEventListener("onclick", sendSearchRequest)
-  document.getElementById("moveBackSubmit").addEventListener("onclick", moveBackToSearchPage)
-  
-  window.addEventListener("onpopstate", manageBrowserButtons);
-  window.addEventListener("onload", manageBrowserButtons);
+  import {initializePageListeners} from './index.js'
+  initializePageListeners()
 </script>
   <div id="searchContainer">
     <div>
         <input type="text" id="searchInput">
-        <input type="submit" id="searchSubmit" value="search for gifs" disabled="true">  
+        <input type="submit" id="searchSubmit" value="search for gifs" disabled="true">
     </div>
     <div id="resultsContainer">
         <div id="results">
