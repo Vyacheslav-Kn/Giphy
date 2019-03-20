@@ -12,8 +12,8 @@ function getWindowLocation () {
 
 export function redirect() {
     const {state} = history
-    let pathName = window.location.pathname
-    if (window.location.search) {
+    let pathName = location.pathname
+    if (location.search) {
         pathName += location.search
     }
     addHistoryStateAndPathName(JSON.stringify(state), JSON.stringify(pathName))
