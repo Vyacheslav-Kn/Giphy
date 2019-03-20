@@ -7,22 +7,21 @@ export function manageBrowserButtons () {
     let currentState = history.state
     let currentUrl = location.href
 
-    const savedPathName = storage.getPathName()
+    const savedPathName = JSON.parse(storage.getPathName())
     if (savedPathName) {
-        currentUrl = `${JSON.parse(savedPathName).replace('/Giphy/', '')}`
+        currentUrl = `${savedPathName.replace('/Giphy/', '')}`
     }
 
     if (!history.state) {
-        const savedHistoryState = storage.getHistoryState()
+        const savedHistoryState = JSON.parse(storage.getHistoryState())
 
-        if (savedHistoryState === null) {
+        if (!savedHistoryState) {
             page.preparePageForNonUserInitiatedTransition(currentUrl)
             return
         }
 
         // User comes after refreshing some page -> take state from local storage
-        currentState = JSON.parse(savedHistoryState)
-        history.replaceState(currentState, '', currentUrl)
+        history.replaceState(savedHistoryState, '', currentUrl)
         storage.clear()
     }
 
