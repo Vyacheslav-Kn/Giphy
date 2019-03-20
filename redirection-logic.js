@@ -18,7 +18,5 @@ export function redirect() {
     }
     addHistoryStateAndPathName(JSON.stringify(state), JSON.stringify(pathName))
 
-    const checkLocation = getWindowLocation()
-    
     window.location = getWindowLocation()
 }
