@@ -37,8 +37,9 @@ export function moveToGifPage (gif) {
 
 export function moveBackToSearchPage () {
     if (history.state.isMovedFromMainPage) {
-        if (location.indexOf(urlToGifMethod) >= 0) {
-            window.location = location.substring(0, location.indexOf(urlToGifMethod))
+        const {href} = location
+        if (href.indexOf(urlToGifMethod) >= 0) {
+            window.location = href.substring(0, href.indexOf(urlToGifMethod))
             return
         }
     }
