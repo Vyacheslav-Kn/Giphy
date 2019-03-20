@@ -5,7 +5,7 @@ import {urlToGifMethod} from './helpers-and-routes.js'
 // eslint-disable-next-line max-statements
 export function manageBrowserButtons () {
     let currentState = history.state
-    let currentUrl = window.location.href
+    let currentUrl = location.href
 
     const savedPathName = storage.getPathName()
     if (savedPathName) {
@@ -37,8 +37,8 @@ export function moveToGifPage (gif) {
 
 export function moveBackToSearchPage () {
     if (history.state.isMovedFromMainPage) {
-        if (window.location.indexOf(urlToGifMethod) >= 0) {
-            window.location = window.location.substring(0, window.location.indexOf(urlToGifMethod))
+        if (location.indexOf(urlToGifMethod) >= 0) {
+            window.location = location.substring(0, location.indexOf(urlToGifMethod))
             return
         }
     }
