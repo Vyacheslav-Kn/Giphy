@@ -3,11 +3,32 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Giphy</title>
-    <script type="module" async>
-        import {redirect} from '../redirection-logic.js'
-    </script>
 </head>
-<body>
-    <div onload="redirect()"></div>
-</body>
+<body onload="redirect()">
+    <script language=javascript>
+        const urlToSearchMethod = 'search?q='
+        const urlToGifMethod = 'gif/'
+
+        function getWindowLocation () {
+            if (window.location.indexOf(urlToSearchMethod) >= 0) {
+                return window.location.substring(0, window.location.indexOf(urlToSearchMethod))
+            }
+
+            return window.location.substring(0, window.location.indexOf(urlToGifMethod))
+        }
+
+        function redirect() {
+            const state = history.state;
+
+            let pathName = window.location.pathname;
+            if (window.location.search) {
+                pathName = pathName + window.location.search;
+            }
+
+            localStorage.setItem('historyState', JSON.stringify(state));
+            localStorage.setItem('pathName', JSON.stringify(pathName));
+
+            window.location = getWindowLocation();
+        }
+    </script>
 </html>
