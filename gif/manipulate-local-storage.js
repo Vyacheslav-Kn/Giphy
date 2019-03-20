@@ -12,9 +12,9 @@ export function clear () {
 }
 
 export function getHistoryState () {
-    localStorage.getItem(historyStateKey)
+    return localStorage.getItem(historyStateKey)
 }
 
 export function getPathName () {
-    localStorage.getItem(pathNameKey)
+    return localStorage.getItem(pathNameKey)
 }
