@@ -3,10 +3,10 @@ import {sendSearchRequest, tryToUnlockSearchButton} from './manipulate-page-elem
 import {getElement} from './helpers-and-routes.js'
 
 export function initializePageListeners () {
-    getElement("searchInput").addEventListener("oninput", tryToUnlockSearchButton)
-    getElement("searchSubmit").addEventListener("onclick", sendSearchRequest)
-    getElement("moveBackSubmit").addEventListener("onclick", moveBackToSearchPage)
+    getElement("searchInput").addEventListener("input", tryToUnlockSearchButton)
+    getElement("searchSubmit").addEventListener("click", sendSearchRequest)
+    getElement("moveBackSubmit").addEventListener("click", moveBackToSearchPage)
 
-    window.addEventListener("onpopstate", manageBrowserButtons)
-    window.addEventListener("onload", manageBrowserButtons)
+    window.addEventListener("popstate", manageBrowserButtons)
+    window.addEventListener("load", manageBrowserButtons)
 }
