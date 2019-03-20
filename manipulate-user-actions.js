@@ -15,7 +15,7 @@ export function manageBrowserButtons () {
     if (!history.state) {
         const savedHistoryState = storage.getHistoryState()
 
-        if (!savedHistoryState) {
+        if (savedHistoryState === null) {
             page.preparePageForNonUserInitiatedTransition(currentUrl)
             return
         }
