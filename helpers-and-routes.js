@@ -8,11 +8,11 @@ export function getElement (elementId) {
         console.log(`element ${elementId} was already searched`)
         return pageElements[elementId]
     }
-    pageElements[elementId] = window.elementId
+    pageElements[elementId] = window[elementId]
 
-    return window.elementId
+    return window[elementId]
 }
 
 export function setElementVisibility (elementId, value) {
-    getElement(elementId).style.display = value;
+    getElement(elementId).style.display = value
 }

@@ -8,14 +8,14 @@ export function manageBrowserButtons () {
     let currentUrl = window.location.href
 
     const savedPathName = storage.getPathName()
-    if (savedPathName !== null) {
+    if (savedPathName) {
         currentUrl = `${JSON.parse(savedPathName).replace('/Giphy/', '')}`
-    } 
+    }
 
     if (history.state === null) {
         const savedHistoryState = storage.getHistoryState()
 
-        if (savedHistoryState === null) {
+        if (!savedHistoryState) {
             page.preparePageForNonUserInitiatedTransition(currentUrl)
             return
         }
@@ -44,7 +44,7 @@ export function moveBackToSearchPage () {
     }
 
     history.back()
-    
+
     // Event 'onpopstate' doesn't happened -> manipulate page elements manually
     page.clearGifElements()
 }

@@ -55,9 +55,7 @@ export function insertLoadButtonOnPage ({searchPhrase, limit, offset}) {
         newSearchState.offset = offset
         history.replaceState({searchState: newSearchState}, '', null)
 
-        search.searchGifsByPhrase({searchPhrase, offset, limit}).then(response => {
-            insertLoadedGifsOnPage(JSON.parse(response).data)
-        }).
+        search.searchGifsByPhrase({searchPhrase, offset, limit}).then(data => insertLoadedGifsOnPage(data)).
             catch(error => console.log(error))
     }
 
@@ -87,8 +85,8 @@ export function sendSearchRequest () {
 
     clearSearchElements()
 
-    search.searchGifsByPhrase(searchProperties).then(response => {
-        insertLoadedGifsOnPage(JSON.parse(response).data)
+    search.searchGifsByPhrase(searchProperties).then(data => {
+        insertLoadedGifsOnPage(data)
         insertLoadButtonOnPage(searchProperties)
     }).
         catch(error => console.log(error))
@@ -99,8 +97,8 @@ function openNewSearchPage (currentUrl) {
     const searchProperties = {searchPhrase, offset: 0, limit: 5}
     history.replaceState({searchState: searchProperties}, '', currentUrl)
 
-    search.searchGifsByPhrase(searchProperties).then(response => {
-        insertLoadedGifsOnPage(JSON.parse(response).data)
+    search.searchGifsByPhrase(searchProperties).then(data => {
+        insertLoadedGifsOnPage(data)
         insertLoadButtonOnPage(searchProperties)
     }).
         catch(error => console.log(error))
@@ -112,9 +110,7 @@ function openNewGifPage (currentUrl) {
     const gifId = currentUrl.substring(currentUrl.indexOf(urlToGifMethod) + urlToGifMethod.length)
     history.replaceState({isMovedFromMainPage: true, gifState: {gifId}}, '', currentUrl)
 
-    search.getGifById(gifId).then(response => {
-        insertGifOnPage(JSON.parse(response).data)
-    }).
+    search.getGifById(gifId).then(data => insertGifOnPage(data)).
         catch(error => console.log(error))
 
     storage.clear()
@@ -147,9 +143,7 @@ function openOldSearchPage (currentState) {
     for (let i = 0; i < numberOfLoadGifsRequests; i++) {
         searchState.offset = searchState.limit * i
 
-        search.searchGifsByPhrase(searchState).then(response => {
-            insertLoadedGifsOnPage(JSON.parse(response).data)
-        }).
+        search.searchGifsByPhrase(searchState).then(data => insertLoadedGifsOnPage(data)).
             catch(error => console.log(error))
     }
 
@@ -158,9 +152,7 @@ function openOldSearchPage (currentState) {
 
 function openOldGifPage (currentState) {
     const {gifState} = currentState
-    search.getGifById(gifState.gifId).then(response => {
-        insertGifOnPage(JSON.parse(response).data)
-    }).
+    search.getGifById(gifState.gifId).then(data => insertGifOnPage(data)).
         catch(error => console.log(error))
 }
 
