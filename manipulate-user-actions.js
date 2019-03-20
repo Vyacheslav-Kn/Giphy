@@ -23,6 +23,7 @@ export function manageBrowserButtons () {
         // User comes after refreshing some page -> take state from local storage
         history.replaceState(savedHistoryState, '', currentUrl)
         storage.clear()
+        currentState = savedHistoryState
     }
 
     page.preparePageForUserInitiatedTransition(currentState)
