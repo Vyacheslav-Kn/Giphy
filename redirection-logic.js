@@ -1,5 +1,5 @@
-import {urlToGifMethod, urlToSearchMethod} from '../helpers-and-routes.js'
-import {addHistoryStateAndPathName} from '../manipulate-local-storage.js'
+import {urlToGifMethod, urlToSearchMethod} from './helpers-and-routes.js'
+import {addHistoryStateAndPathName} from './manipulate-local-storage.js'
 
 function getWindowLocation () {
     if (window.location.indexOf(urlToSearchMethod) >= 0) {
