@@ -1,7 +1,7 @@
 import {urlToGifMethod, urlToSearchMethod} from './helpers-and-routes.js'
 import {addHistoryStateAndPathName} from './manipulate-local-storage.js'
 
-export function redirect() {
+function redirect() {
     const {state} = history
     let pathName = window.location.pathname
     if (window.location.search) {

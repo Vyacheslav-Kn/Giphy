@@ -12,7 +12,7 @@ export function manageBrowserButtons () {
         currentUrl = `${JSON.parse(savedPathName).replace('/Giphy/', '')}`
     }
 
-    if (history.state === null) {
+    if (!history.state) {
         const savedHistoryState = storage.getHistoryState()
 
         if (!savedHistoryState) {
