@@ -10,6 +10,7 @@ function memoizeSearch () {
     const mSearch = function ({searchPhrase, limit, offset}) {
         const queryString = `${endPoint}${urlToSearchMethod}${searchPhrase}&api_key=${apiKey}&limit=${limit}&offset=${offset}`
 
+        /*
         const key = generateKey(searchPhrase, offset)
         const cachedResult = cachedResults[key]
 
@@ -17,8 +18,18 @@ function memoizeSearch () {
             console.log(`cached value for key = ${key}`)
             return Promise.resolve(cachedResult)
         }
+        */
 
         return new Promise((resolve) => {
+            const key = generateKey(searchPhrase, offset)
+            const cachedResult = cachedResults[key]
+
+            if (cachedResult) {
+                console.log(`cached value for key = ${key}`)
+                resolve(cachedResult)
+            }
+
+
             fetch(queryString)
                 .then(response => response.json())
                 .then(responseJSON => {
