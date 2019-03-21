@@ -1,4 +1,4 @@
-import * as pageElements from "./manipulate-page-elements"
+import * as pageElements from "./manipulate-page-elements.js"
 import * as search from "./search.js"
 import * as storage from "./manipulate-local-storage.js"
 import {urlToGifMethod, urlToSearchMethod} from "./routes.js"
