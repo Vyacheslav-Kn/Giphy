@@ -15,7 +15,7 @@ function memoizeSearch () {
 
         if (cachedResult) {
             console.log(`cached value for key = ${key}`)
-            Promise.resolve(cachedResult)
+            return Promise.resolve(cachedResult)
         }
 
         return new Promise((resolve) => {
