@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link href="style.css" rel="stylesheet">
+  <title>Giphy</title>
+ </head>
+ <body>
+<script type="module">
+  import {initializePageListeners} from './index.js'
+  initializePageListeners()
+</script>
+  <div id="searchContainer">
+    <div>
+        <input type="text" id="searchInput">
+        <input type="submit" id="searchSubmit" value="search for gifs" disabled="true">
+    </div>
+    <div id="resultsContainer">
+        <div id="results">
+
+        </div>
+        <div id="controlButtons">
+
+        </div>
+    </div>
+  </div>
+  <div id="gifContainer" style="display: none">
+    <div id="gifInfo">
+        <img src="" id="gifInfoImg">
+        <div id="gifInfoDescription">
+
+        </div>
+    </div>
+    <div id="authorInfo">
+        <img src="" id="authorInfoImg">
+        <div id="authorInfoDescription">
+
+        </div>
+    </div>
+    <input type="submit" id="moveBackSubmit" value="move back">
+  </div>
+</body>
+</html>
