@@ -1,4 +1,5 @@
 import * as browser from "./browser-helpers.js"
+import * as htmlHelpers from "./html-helpers.js"
 import * as ids from "./elements-ids.js"
 import * as pageElements from "./manipulate-page-elements.js"
 import * as pages from "./manipulate-pages.js"
@@ -7,7 +8,7 @@ import * as storage from "./manipulate-local-storage.js"
 import {urlToGifMethod, urlToSearchMethod} from "./routes.js"
 
 export function sendSearchRequest () {
-    const searchPhrase = encodeURIComponent(pageElements.getElement(ids.searchInput).value)
+    const searchPhrase = encodeURIComponent(htmlHelpers.getElement(ids.searchInput).value)
     const limit = search.defaultLimit
     const offset = search.defaultOffset
 
