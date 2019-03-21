@@ -1,10 +1,10 @@
-import * as browser from "./browser-helpers"
+import * as browser from "./browser-helpers.js"
 import * as ids from "./elements-ids.js"
-import * as pageElements from "./manipulate-page-elements"
+import * as pageElements from "./manipulate-page-elements.js"
 import * as pages from "./manipulate-pages.js"
 import * as search from "./search.js"
 import * as storage from "./manipulate-local-storage.js"
-import {urlToGifMethod, urlToSearchMethod} from "./routes"
+import {urlToGifMethod, urlToSearchMethod} from "./routes.js"
 
 export function sendSearchRequest () {
     const searchPhrase = encodeURIComponent(pageElements.getElement(ids.searchInput).value)
