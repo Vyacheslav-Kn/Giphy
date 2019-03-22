@@ -48,25 +48,26 @@ export function preparePagesForNonUserInitiatedTransition (currentUrl) {
 
 function openOldSearchPage (currentState) {
     const {searchState} = currentState
+    const modifiedSearchState = currentState.searchState
 
     const numberOfLoadGifsRequests = (searchState.offset / searchState.limit) + 1
-    searchState.limit = numberOfLoadGifsRequests * searchState.offset
-    searchState.offset = search.defaultOffset
+    modifiedSearchState.limit = numberOfLoadGifsRequests * searchState.limit
+    modifiedSearchState.offset = search.defaultOffset
 
     pageElements.clearSearchElements();
     pageElements.clearGifElements();
 
-    search.searchGifsByPhrase(searchState)
+    search.searchGifsByPhrase(modifiedSearchState)
         .then(data => {
             // Inserts gifs into page, like user loaded them through requests
             for (let i = 0; i < numberOfLoadGifsRequests; i++) {
-                const gifsPortion = data.slice(currentState.offset * i, (currentState.offset * i) + currentState.limit)
+                const gifsPortion = data.slice(searchState.limit * i, searchState.limit * (i + 1))
                 pageElements.insertLoadedGifs(gifsPortion)
             }
         })
         .catch(error => console.log(error))
 
-    pageElements.insertLoadButton(currentState)
+    pageElements.insertLoadButton(searchState)
 }
 
 function openOldGifPage (currentState) {
