@@ -1,7 +1,7 @@
 import * as pageElements from "./manipulate-page-elements.js"
 import * as search from "./search.js"
 import * as storage from "./manipulate-local-storage.js"
-import {urlToGifMethod, urlToSearchMethod} from "./routes.js"
+import {urlToGifMethod, urlToSearchMethod} from "./configuration.js"
 
 function openNewSearchPage (currentUrl) {
     const searchPhrase = currentUrl.substring(currentUrl.indexOf(urlToSearchMethod) + urlToSearchMethod.length)
@@ -78,13 +78,13 @@ function openOldGifPage (currentState) {
 }
 
 export function preparePagesForUserInitiatedTransition (currentState) {
-    // User comes back to search page
+    // User comes to search page
     if (currentState.searchState) {
         openOldSearchPage(currentState)
         return
     }
 
-    // User comes back to gif page
+    // User comes to gif page
     if (currentState.gifState) {
         openOldGifPage(currentState)
     }

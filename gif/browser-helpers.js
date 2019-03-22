@@ -1,4 +1,4 @@
-import {urlToGifMethod, urlToSearchMethod} from "./routes.js"
+import {urlToGifMethod, urlToSearchMethod} from "./configuration.js"
 
 export function getRepositoryLocation () {
     const {href} = location

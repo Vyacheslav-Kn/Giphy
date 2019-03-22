@@ -1,4 +1,4 @@
-import {apiKey, endPoint, urlToSearchMethod} from "./routes.js"
+import {apiKey, endPoint, urlToSearchMethod} from "./configuration.js"
 
 export const defaultLimit = 5
 export const defaultOffset = 0
@@ -15,7 +15,7 @@ function memoizeSearch () {
 
         if (cachedResult) {
             console.log(`cached value for key = ${key}`)
-            Promise.resolve(cachedResult)
+            return Promise.resolve(cachedResult)
         }
 
         return new Promise((resolve) => {

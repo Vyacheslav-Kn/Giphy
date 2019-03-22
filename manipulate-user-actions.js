@@ -5,7 +5,7 @@ import * as pageElements from "./manipulate-page-elements.js"
 import * as pages from "./manipulate-pages.js"
 import * as search from "./search.js"
 import * as storage from "./manipulate-local-storage.js"
-import {urlToGifMethod, urlToSearchMethod} from "./routes.js"
+import {urlToGifMethod, urlToSearchMethod} from "./configuration.js"
 
 export function sendSearchRequest () {
     const searchPhrase = encodeURIComponent(htmlHelpers.getElement(ids.searchInput).value)
@@ -58,6 +58,7 @@ export function manageBrowserButtons () {
         const savedHistoryState = storage.getHistoryState()
 
         if (!savedHistoryState) {
+            // User comes by reference
             pages.preparePagesForNonUserInitiatedTransition(currentUrl)
             return
         }
@@ -68,5 +69,6 @@ export function manageBrowserButtons () {
         currentState = savedHistoryState
     }
 
+    // User comes after pressing back/forward button
     pages.preparePagesForUserInitiatedTransition(currentState)
 }
