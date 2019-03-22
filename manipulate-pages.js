@@ -48,7 +48,7 @@ export function preparePagesForNonUserInitiatedTransition (currentUrl) {
 
 function openOldSearchPage (currentState) {
     const {searchState} = currentState
-    const modifiedSearchState = currentState.searchState
+    const modifiedSearchState = Object.create(currentState.searchState)
 
     const numberOfLoadGifsRequests = (searchState.offset / searchState.limit) + 1
     modifiedSearchState.limit = numberOfLoadGifsRequests * searchState.limit
