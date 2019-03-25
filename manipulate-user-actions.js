@@ -1,4 +1,3 @@
-import * as browser from "./browser-helpers.js"
 import * as htmlHelpers from "./html-helpers.js"
 import * as ids from "./elements-ids.js"
 import * as pageElements from "./manipulate-page-elements.js"
@@ -52,7 +51,7 @@ export function manageBrowserButtons () {
 
     const savedPathName = storage.getPathName()
     if (savedPathName) {
-        currentUrl = `${savedPathName.replace(`/${browser.getRepositoryName()}/`, "")}`
+        currentUrl = savedPathName
     }
 
     if (!history.state) {

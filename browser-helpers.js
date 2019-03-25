@@ -8,9 +8,3 @@ export function getRepositoryLocation () {
 
     return href.substring(0, href.indexOf(urlToGifMethod))
 }
-
-export function getRepositoryName () {
-    const repositoryLocation = getRepositoryLocation()
-    
-    return repositoryLocation.substring(0, location.origin.length + 1)
-}
