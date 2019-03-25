@@ -43,6 +43,7 @@ export function preparePagesForNonUserInitiatedTransition (currentUrl) {
     }
 
     // Main page reference
+    pageElements.clearGifElements()
     pageElements.clearSearchElements()
 }
 
