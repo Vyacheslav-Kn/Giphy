@@ -52,7 +52,7 @@ export function manageBrowserButtons () {
 
     const savedPathName = storage.getPathName()
     if (savedPathName) {
-        currentUrl = `${savedPathName.replace(`/${browser.getRepositoryName}/`, "")}`
+        currentUrl = `${savedPathName.replace(`/${browser.getRepositoryName()}/`, "")}`
     }
 
     if (!history.state) {
