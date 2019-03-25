@@ -54,8 +54,8 @@ function openOldSearchPage (currentState) {
     modifiedSearchState.limit = numberOfLoadGifsRequests * searchState.limit
     modifiedSearchState.offset = search.defaultOffset
 
-    pageElements.clearSearchElements();
-    pageElements.clearGifElements();
+    pageElements.clearSearchElements()
+    pageElements.clearGifElements()
 
     search.searchGifsByPhrase(modifiedSearchState)
         .then(data => {

@@ -34,7 +34,8 @@ export function moveToGifPage (gif) {
 
 export function moveBackToSearchPage () {
     if (history.state.hasComeByReference) {
-        window.location = browser.getRepositoryLocation()
+        history.pushState(null, "", "/")
+        pageElements.clearGifElements()
         return
     }
 
