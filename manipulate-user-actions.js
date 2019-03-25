@@ -34,7 +34,7 @@ export function moveToGifPage (gif) {
 
 export function moveBackToSearchPage () {
     if (history.state.hasComeByReference) {
-        history.pushState(null, "", "./")
+        history.pushState(null, "", "../")
         pageElements.clearGifElements()
         return
     }
