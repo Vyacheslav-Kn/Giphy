@@ -34,7 +34,7 @@ export function moveToGifPage (gif) {
 
 export function moveBackToSearchPage () {
     if (history.state.hasComeByReference) {
-        history.pushState(null, "", "/")
+        history.pushState(null, "", "./")
         pageElements.clearGifElements()
         return
     }
@@ -52,7 +52,7 @@ export function manageBrowserButtons () {
 
     const savedPathName = storage.getPathName()
     if (savedPathName) {
-        currentUrl = `${savedPathName.replace("/Giphy/", "")}`
+        currentUrl = `${savedPathName.replace(`/${browser.getRepositoryName}/`, "")}`
     }
 
     if (!history.state) {
