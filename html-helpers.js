@@ -1,6 +1,3 @@
-export const urlToSearchMethod = 'search?q='
-export const urlToGifMethod = 'gif/'
-
 const pageElements = {}
 
 export function getElement (elementId) {
@@ -13,6 +10,10 @@ export function getElement (elementId) {
     return window[elementId]
 }
 
-export function setElementVisibility (elementId, value) {
-    getElement(elementId).style.display = value
+export function hideElement (elementId) {
+    getElement(elementId).style.display = "none"
+}
+
+export function showElement (elementId) {
+    getElement(elementId).style.display = ""
 }

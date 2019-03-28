@@ -2,8 +2,8 @@ const historyStateKey = "historyState"
 const pathNameKey = "pathName"
 
 export function addHistoryStateAndPathName (state, path) {
-    localStorage.setItem(historyStateKey, state)
-    localStorage.setItem(pathNameKey, path)
+    localStorage.setItem(historyStateKey, JSON.stringify(state))
+    localStorage.setItem(pathNameKey, JSON.stringify(path))
 }
 
 export function clear () {
@@ -12,9 +12,9 @@ export function clear () {
 }
 
 export function getHistoryState () {
-    return localStorage.getItem(historyStateKey)
+    return JSON.parse(localStorage.getItem(historyStateKey))
 }
 
 export function getPathName () {
-    return localStorage.getItem(pathNameKey)
+    return JSON.parse(localStorage.getItem(pathNameKey))
 }
