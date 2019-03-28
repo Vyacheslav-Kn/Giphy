@@ -2,11 +2,11 @@ import {urlToGifMethod, urlToSearchMethod} from "./configuration.js"
 
 export function getRepositoryLocation () {
     const {href} = location
-    const indexOfSearchMethod = href.indexOf(urlToSearchMethod)
+    let index = href.indexOf(urlToSearchMethod)
 
-    if (indexOfSearchMethod > -1) {
-        return href.substring(0, indexOfSearchMethod)
+    if (index === -1) {
+        index = href.indexOf(urlToGifMethod)
     }
 
-    return href.substring(0, href.indexOf(urlToGifMethod))
+    return href.substring(0, index)
 }
