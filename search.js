@@ -3,12 +3,25 @@ import {apiKey, endPoint, urlToSearchMethod} from "./configuration.js"
 export const defaultLimit = 5
 export const defaultOffset = 0
 
+function generateQueryString ({searchPhrase, params}) {
+    let queryString = `${endPoint}${urlToSearchMethod}${searchPhrase}`
+
+    for (let key in params) {
+        if (Object.prototype.hasOwnProperty.call(params, key)) {
+            queryString += `&${key}=${params[key]}`
+        }
+    }
+
+    return queryString
+}
+
 function memoizeSearch () {
     const generateKey = (searchPhrase, offset, limit) => `${searchPhrase} : ${offset} : ${limit}`
     const cachedResults = {}
 
     const mSearch = function ({searchPhrase, limit, offset}) {
-        const queryString = `${endPoint}${urlToSearchMethod}${searchPhrase}&api_key=${apiKey}&limit=${limit}&offset=${offset}`
+        const params = {offset, limit, "api_key": apiKey};
+        const queryString = generateQueryString({searchPhrase, params})
 
         const key = generateKey(searchPhrase, offset, limit)
         const cachedResult = cachedResults[key]
